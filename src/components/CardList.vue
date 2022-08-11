@@ -4,7 +4,8 @@
       class="game-list-cards"
       :class="{
         'game-list-cards--10': cardPair == 10,
-        'game-list-cards--4': cardPair != 10,
+        'game-list-cards--8': cardPair == 8,
+        'game-list-cards--4': cardPair != 8 && cardPair != 10,
       }"
     >
       <div
@@ -42,14 +43,6 @@ export default {
     const coveredCard = computed(() => store.state.gamePokemon.coveredCard);
 
     const gameListCard = ref("game-list-cards--4");
-
-    watch(cardPair, (newValue) => {
-      if (newValue == 10) {
-        gameListCard.value = "game-list-cards--10";
-      } else if (newValue == 6) {
-        gameListCard.value = "game-list-cards--8";
-      }
-    });
 
     watch(badSelect, (newValue) => {
       if (newValue < 1) {

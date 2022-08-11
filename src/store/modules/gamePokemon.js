@@ -26,8 +26,8 @@ const state = () => {
         selectCard: [],
         pariCard: [],
         uncoveredCard: [],
-        coveredCard: []
-
+        coveredCard: [],
+        isOpenModal: false
     }
 }
 
@@ -68,12 +68,14 @@ const actions = {
         state.coveredCard = state.listCardDefault.filter((card) => !state.uncoveredCard.includes(card))
     },
     handleLostGame({ state }) {
+        state.isOpenModal = true
         state.gameResults = {
             win: false,
             lost: true
         }
     },
     handleWinGame({ state }) {
+        state.isOpenModal = true
         state.gameResults = {
             win: true,
             lost: false
@@ -84,6 +86,7 @@ const actions = {
         state.listCardDefault = listCardReset;
         state.selectCard = [];
         state.pariCard = [];
+        state.isOpenModal = false
         state.gameResults = {
             win: false,
             lost: false
@@ -91,6 +94,12 @@ const actions = {
         state.badSelect = 7;
         state.uncoveredCard = [];
         state.coveredCard = listCardReset
+    },
+    handleOpenModal({ state }) {
+        state.isOpenModal = true
+    },
+    handleCloseModal({ state }) {
+        state.isOpenModal = false
     }
 }
 

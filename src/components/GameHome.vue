@@ -5,33 +5,41 @@
         <h1>HIE GAME POKEMON</h1>
         <form-select />
         <card-list />
-        <button @click="handleResetGame">Reset Game</button>
-      </div>
-      <div class="result__game">
-        <div class="lost__game" v-if="gameResult.lost">LOST</div>
-        <div class="win__game" v-if="gameResult.win">WIN</div>
+        <button @click="handleResetGame">Reset game</button>
       </div>
     </div>
   </div>
+  <teleport to="#app">
+    <the-modal
+      :isopen="isOpenModal"
+      :handleCloseModal="handleCloseModal"
+    ></the-modal>
+  </teleport>
 </template>
 
 <script>
 import { computed } from "vue";
-import { useStore } from "vuex";
 import CardList from "./CardList.vue";
 import FormSelect from "./FormSelect.vue";
+import TheModal from "./TheModal.vue";
+import { useStore } from "vuex";
 export default {
-  components: { FormSelect, CardList },
+  components: { FormSelect, CardList, TheModal },
   setup() {
     const store = useStore();
-    const gameResult = computed(() => store.state.gamePokemon.gameResults);
+    const isOpenModal = computed(() => store.state.gamePokemon.isOpenModal);
+
+    const handleCloseModal = () => {
+      store.dispatch("gamePokemon/handleCloseModal");
+    };
 
     const handleResetGame = () => {
       store.dispatch("gamePokemon/handleResetGame");
     };
 
     return {
-      gameResult,
+      handleCloseModal,
+      isOpenModal,
       handleResetGame,
     };
   },
